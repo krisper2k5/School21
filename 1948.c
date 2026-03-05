@@ -31,7 +31,7 @@ int isPrimary(int n) {
     return result;
 }
 
-int find_largest_prime_divisor(int n) {
+int findLargestPrimeDivisor(int n) {
     int abs_n;
     int candidate;
     int result;
@@ -68,7 +68,7 @@ int main() {
         return 0;
     }
 
-    res = find_largest_prime_divisor(a);
+    res = findLargestPrimeDivisor(a);
 
     if (res == -1) {
         printf("n/a\n");
