@@ -9,22 +9,6 @@ int hexToInt(char c) {
 }
 
 void encode() {
-    int c;
-    int first = 1;
-
-    while ((c = getchar()) != '\n' && c != EOF) {
-        if (c == ' ') continue;
-
-        if (!first) printf(" ");
-
-        printf("%02X", (unsigned char)c);
-        first = 0;
-    }
-
-    printf("\n");
-}
-
-void decode() {
     int c1, c2;
     int first = 1;
 
@@ -32,7 +16,40 @@ void decode() {
         c1 = getchar();
         if (c1 == '\n' || c1 == EOF) break;
 
-        if (c1 == ' ') continue;
+        if (c1 == ' ') {
+            printf("n/a");
+            return;
+        }
+
+        c2 = getchar();
+        if (c2 == '\n' || c2 == EOF) break;
+
+        if (c2 != ' ') {
+            printf("n/a");
+            return;
+        }
+
+        if (!first) printf(" ");
+
+        printf("%02X", (unsigned char)c1);
+        first = 0;
+    }
+
+    printf("\n");
+}
+
+void decode() {
+    int c1, c2, c3;
+    int first = 1;
+
+    while (1) {
+        c1 = getchar();
+        if (c1 == '\n' || c1 == EOF) break;
+
+        if (c1 == ' ') {
+            printf("n/a");
+            return;
+        }
 
         c2 = getchar();
         if (c2 == '\n' || c2 == EOF) {
@@ -48,10 +65,18 @@ void decode() {
             return;
         }
 
+        c3 = getchar();
+        if (c3 != ' ' && c3 != '\n' && c3 != EOF) {
+            printf("n/a");
+            return;
+        }
+
         if (!first) printf(" ");
 
         printf("%c", (char)((high << 4) | low));
         first = 0;
+
+        if (c3 == '\n' || c3 == EOF) break;
     }
 
     printf("\n");
@@ -63,11 +88,9 @@ int main(int argc, char **argv) {
         return 0;
     }
 
-    char *mode = *(argv + 1);
-
-    if (strcmp(mode, "0") == 0)
+    if (strcmp(*(argv + 1), "0") == 0)
         encode();
-    else if (strcmp(mode, "1") == 0)
+    else if (strcmp(*(argv + 1), "1") == 0)
         decode();
     else
         printf("n/a");
